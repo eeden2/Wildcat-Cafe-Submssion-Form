@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.util.Random;
+import java.time.LocalDateTime;
+
 public class currentOrder
 {
     public int room;
@@ -11,10 +15,11 @@ public class currentOrder
     public short muffin;
     public String muffinFlavor;
     public short bar;
-    public int identifier;
+    public int identifier=new Random().nextInt();
 
     public currentOrder( double t, short ca, String cc, short c, short dan, String df, short m, String mf, short b)
     {
+        date = LocalDate.now().toString();
         total = t;
         coffeeAmount = ca;
         coffeeCreamer = cc;

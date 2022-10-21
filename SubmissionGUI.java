@@ -10,12 +10,12 @@ import java.util.*;
 import java.io.*;
 public class SubmissionGUI extends javax.swing.JFrame {
 
-    public SubmissionGUI sgui;
     public currentOrder cO;
     public HashMap<String, Double> prices = new HashMap<>();
 
     public SubmissionGUI() {
 
+        //I have all the items pre-set at instantiation, so they can be accessed in getTotal()
         prices.put("coffee", 2.0);
         prices.put("danish", 1.5);
         prices.put("bar",1.0);
@@ -29,18 +29,20 @@ public class SubmissionGUI extends javax.swing.JFrame {
         double total = 0.0;
         try
         {
-           int dan = Integer.parseInt(danishAmount.getText());
-           int coffee = Integer.parseInt(coffeeAmount.getText());
-           int muffin = Integer.parseInt(muffinAmount.getText());
-           int cocoa = Integer.parseInt(cocoaAmount.getText());
-           int bar = Integer.parseInt(barAmount.getText());
+            //First get the input from the text area
+            int dan = Integer.parseInt(danishAmount.getText());
+            int coffee = Integer.parseInt(coffeeAmount.getText());
+            int muffin = Integer.parseInt(muffinAmount.getText());
+            int cocoa = Integer.parseInt(cocoaAmount.getText());
+            int bar = Integer.parseInt(barAmount.getText());
 
-           total+=(dan*prices.get("danish"));
-           total+=(coffee*prices.get("coffee"));
-           total+=(muffin*prices.get("muffin"));
-           total+=(cocoa*prices.get("cocoa"));
-           total+=(bar*prices.get("bar"));
-           return total;
+            //Calculate the price and add to the total
+            total+=(dan*prices.get("danish"));
+            total+=(coffee*prices.get("coffee"));
+            total+=(muffin*prices.get("muffin"));
+            total+=(cocoa*prices.get("cocoa"));
+            total+=(bar*prices.get("bar"));
+            return total;
         }catch(Exception e){e.printStackTrace();}
         return total;
     }
@@ -77,6 +79,7 @@ public class SubmissionGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        //Basic stuff to actually setup the GUI Window. This was done by NetBeans automatically
         nextPage.setText("Next");
         nextPage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +120,7 @@ public class SubmissionGUI extends javax.swing.JFrame {
             }
         });
 
-        danishList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None (If amount is 0)","Cheese", "Cherry" }));
+        danishList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None","Cheese", "Cherry" }));
         danishList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 danishListActionPerformed(evt);
@@ -140,7 +143,7 @@ public class SubmissionGUI extends javax.swing.JFrame {
         muffinFlavor.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         muffinFlavor.setText("Muffin Flavor:");
 
-        muffinList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None (If amount is 0)","Banana", "Blueberry" }));
+        muffinList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None","Banana", "Blueberry" }));
         muffinList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 muffinListActionPerformed(evt);
@@ -272,13 +275,17 @@ public class SubmissionGUI extends javax.swing.JFrame {
                                 .addGap(31, 31, 31))
         );
 
+        //Always pack a JFrame or your results won't show
         pack();
     }// </editor-fold>
 
     private void nextPageActionPerformed(java.awt.event.ActionEvent evt) {
-        cO = new currentOrder(getTotal(),Short.parseShort(coffeeAmount.getText()),creamerList.getActionCommand(),Short.parseShort(cocoaAmount.getText()),Short.parseShort(danishAmount.getText()),danishFlavor.getText(),
-                Short.parseShort(muffinAmount.getText()),muffinFlavor.getText(),Short.parseShort(barAmount.getText()));
+        //First instantiate the currentOrder class to store variables
+        //Simply sending variables in page2 as parameters did not work after various attempts
+        cO = new currentOrder(getTotal(),Short.parseShort(coffeeAmount.getText()),creamerList.getSelectedItem().toString(),Short.parseShort(cocoaAmount.getText()),Short.parseShort(danishAmount.getText()),danishList.getSelectedItem().toString(),
+                Short.parseShort(muffinAmount.getText()),muffinList.getSelectedItem().toString(),Short.parseShort(barAmount.getText()));
         SubmissionGUIPage2 page2 = new SubmissionGUIPage2();
+        //I also could not put cO as a parameter, so I made a void method to set it, bypassing such error.
         page2.setcO(cO);
         page2.setVisible(true);
     }

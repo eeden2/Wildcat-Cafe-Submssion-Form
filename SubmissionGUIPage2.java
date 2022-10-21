@@ -6,6 +6,7 @@
  *
  * @author mrglade
  */
+import java.sql.*;
 public class SubmissionGUIPage2 extends javax.swing.JFrame {
     public currentOrder cO;
     public SubmissionGUIPage2() {
@@ -14,7 +15,8 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
 
     public void setcO(currentOrder cO) {
         this.cO = cO;
-        moneyDisplay.setText("$"+cO.total);
+        String temp = String.format("%.2f",cO.total);
+        moneyDisplay.setText("$"+temp);
     }
 
     /**
@@ -26,6 +28,8 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+        //Again, this extra setup was automatically put in by NetBeans
+        //////////////////////////////////////////////////////////////
         title = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -153,7 +157,8 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
-
+    ///////////////////////////////////////////////////
+    //These next two action methods are not needed unless further features permit.
     private void roomInputActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -163,7 +168,38 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
     }
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        //Gets drivers setup for connection ton PostGreSQL
+        Connection c = null;
+        //Data type statement actually feeds the statement into the postGre server;
+        Statement s = null;
+        try {
+            //First setup a connection to the database
+            c = DriverManager
+                    .getConnection("jdbc:postgresql://10.2.33.160:5432/wildcatcafe",
+                            "postgres", "1234");
+            //Instantiates a statement input
+            s = c.createStatement();
+            //Date is in second window, so to maintain consistency, I set it to its varaible
+            //in currentOrder
+            if(tuesday.isSelected())
+            {
+                cO.date = "Tuesday";
+            }else{cO.date = "Friday";}
+
+            //A string is used to fill the place of a SQL command
+            String state = String.format("INSERT INTO orders(room,total, date, coffeeamount,coffeecreamer,cocoa,danish,danishflavor,muffin,muffinflavor,bar,identifier) " +
+                    "VALUES(%d,%f,'%s',%d,'%s',%d,%d,'%s',%d,'%s',%d,%d);",Short.parseShort(roomInput.getText()),cO.total,cO.date,cO.coffeeAmount,cO.coffeeCreamer,cO.cocoa,cO.danish,cO.danishFlavor,cO.muffin,cO.muffinFlavor,cO.bar,cO.identifier);
+
+            //This sends command to database
+            s.executeUpdate(state);
+
+            //Program ends
+            System.exit(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName()+": "+e.getMessage());
+            System.exit(0);
+        }
     }
 
     /**
