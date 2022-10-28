@@ -160,9 +160,9 @@ public class SubmissionGUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/mrglade/Documents/Wildcat Cafe Automation/Submission/WildcatCafeSubmission/src/main/java/com/edendiez/wildcatcafesubmission/cat.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/home/mrglade/Documents/Wildcat Cafe Automation/Submission/WildcatCafeSubmission/src/main/java/com/edendiez/wildcatcafesubmission/cat.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
 
         jLabel3.setText("(Type in a Number for the quantity of each item)");
 

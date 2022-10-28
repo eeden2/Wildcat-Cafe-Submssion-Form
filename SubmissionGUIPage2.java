@@ -47,9 +47,9 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
         title.setFont(new java.awt.Font("URW Gothic", 0, 24)); // NOI18N
         title.setText("Wildcat Cafe Order Sheet");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/mrglade/Documents/Wildcat Cafe Automation/Submission/WildcatCafeSubmission/src/main/java/com/edendiez/wildcatcafesubmission/cat.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("/home/mrglade/Documents/Wildcat Cafe Automation/Submission/WildcatCafeSubmission/src/main/java/com/edendiez/wildcatcafesubmission/cat.png")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
 
         displayText.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         displayText.setText("Your Total Will Be:");
