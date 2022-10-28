@@ -175,7 +175,7 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
         try {
             //First setup a connection to the database
             c = DriverManager
-                    .getConnection("jdbc:postgresql://10.2.33.160:5432/wildcatcafe",
+                    .getConnection("jdbc:postgresql://127.0.0.1:5432/wildcatcafe",
                             "postgres", "1234");
             //Instantiates a statement input
             s = c.createStatement();
@@ -187,7 +187,7 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
             }else{cO.date = "Friday";}
 
             //A string is used to fill the place of a SQL command
-            String state = String.format("INSERT INTO orders(room,total, date, coffeeamount,coffeecreamer,cocoa,danish,danishflavor,muffin,muffinflavor,bar,identifier) " +
+            String state = String.format("INSERT INTO currentorders(room,total, date, coffeeamount,coffeecreamer,cocoa,danish,danishflavor,muffin,muffinflavor,bar,identifier) " +
                     "VALUES(%d,%f,'%s',%d,'%s',%d,%d,'%s',%d,'%s',%d,%d);",Short.parseShort(roomInput.getText()),cO.total,cO.date,cO.coffeeAmount,cO.coffeeCreamer,cO.cocoa,cO.danish,cO.danishFlavor,cO.muffin,cO.muffinFlavor,cO.bar,cO.identifier);
 
             //This sends command to database
