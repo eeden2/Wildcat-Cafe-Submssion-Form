@@ -50,7 +50,7 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
 
         jLabel2.setIcon(new javax.swing.ImageIcon("cat.png")); // NOI18N
-
+//
         displayText.setFont(new java.awt.Font("Fira Sans", 0, 18)); // NOI18N
         displayText.setText("Your Total Will Be:");
 
