@@ -30,6 +30,7 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
 
         //Again, this extra setup was automatically put in by NetBeans
         //////////////////////////////////////////////////////////////
+
         title = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -41,6 +42,10 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
         tuesday = new javax.swing.JRadioButton();
         friday = new javax.swing.JRadioButton();
         submit = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        orderSpecifications = new javax.swing.JTextArea();
+        specificationsText = new javax.swing.JLabel();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,6 +90,11 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
                 submitActionPerformed(evt);
             }
         });
+        orderSpecifications.setColumns(20);
+        orderSpecifications.setRows(5);
+        jScrollPane2.setViewportView(orderSpecifications);
+
+        specificationsText.setText("Order Specifications");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,13 +128,17 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
                                                                         .addGap(29, 29, 29)
                                                                         .addComponent(deliveryText))
                                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(tuesday)
-                                                                        .addGap(18, 18, 18)
-                                                                        .addComponent(friday)))))
+                                                                        .addGap(14, 14, 14)
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                                        .addComponent(tuesday)
+                                                                                        .addGap(18, 18, 18)
+                                                                                        .addComponent(friday))
+                                                                                .addComponent(specificationsText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(227, 227, 227)
-                                                .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(91, 91, 91)
+                                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -150,9 +164,13 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(tuesday)
                                         .addComponent(friday))
-                                .addGap(96, 96, 96)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(specificationsText, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(98, Short.MAX_VALUE))
+                                .addContainerGap())
         );
 
         pack();
@@ -175,7 +193,7 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
         try {
             //First setup a connection to the database
             c = DriverManager
-                    .getConnection("jdbc:postgresql://127.0.0.1:5432/wildcatcafe",
+                    .getConnection("jdbc:postgresql://10.2.33.178:5432/wildcatcafe",
                             "postgres", "1234");
             //Instantiates a statement input
             s = c.createStatement();
@@ -187,10 +205,14 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
             }else{cO.date = "Friday";}
 
             //A string is used to fill the place of a SQL command
-            String state = String.format("INSERT INTO currentorders(room,total, date, coffeeamount,coffeecreamer,cocoa,danish,danishflavor,muffin,muffinflavor,bar,identifier) " +
+            String state = String.format("INSERT INTO orders(room,total, date, coffeeamount,coffeecreamer,cocoa,danish,danishflavor,muffin,muffinflavor,bar,identifier) " +
                     "VALUES(%d,%f,'%s',%d,'%s',%d,%d,'%s',%d,'%s',%d,%d);",Short.parseShort(roomInput.getText()),cO.total,cO.date,cO.coffeeAmount,cO.coffeeCreamer,cO.cocoa,cO.danish,cO.danishFlavor,cO.muffin,cO.muffinFlavor,cO.bar,cO.identifier);
 
             //This sends command to database
+            s.executeUpdate(state);
+
+            state = String.format("INSERT INTO orderspecifications(specifications, identifier) VALUES(\'" + orderSpecifications.getText()+"\',%d);",cO.identifier);
+
             s.executeUpdate(state);
 
             //Program ends
@@ -242,9 +264,14 @@ public class SubmissionGUIPage2 extends javax.swing.JFrame {
     private javax.swing.JRadioButton friday;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel moneyDisplay;
+    private javax.swing.JTextArea orderSpecifications;
     private javax.swing.JTextField roomInput;
     private javax.swing.JLabel roomText;
+    private javax.swing.JLabel specificationsText;
     private javax.swing.JButton submit;
     private javax.swing.JLabel title;
     private javax.swing.JRadioButton tuesday;
